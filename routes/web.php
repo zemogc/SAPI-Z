@@ -17,7 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Rutas para CRUD de Propiedades
+    // Rutas de CRUD Propiedades
     Route::get('/propiedades', [PropiedadController::class, 'index'])->name('propiedades.index');
     Route::get('/propiedades/create', [PropiedadController::class, 'create'])->name('propiedades.create');
     Route::post('/propiedades', [PropiedadController::class, 'store'])->name('propiedades.store');

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\propiedad; 
+use App\Models\Propiedad; 
 use Illuminate\Support\Facades\DB;
 
 class PropiedadController extends Controller
@@ -13,10 +13,8 @@ class PropiedadController extends Controller
      */
     public function index()
     {
-        $propiedades = DB::table('propiedades')
-            ->select('propiedades.*')
-            ->get();
-        return view('propiedades.index', ['propiedades'=>$propiedades]);
+        $propiedades = Propiedad::all(); 
+        return view('propiedades.index', ['propiedades' => $propiedades]);
     }
 
     /**
@@ -24,7 +22,9 @@ class PropiedadController extends Controller
      */
     public function create()
     {
-        return view('propiedades.index');
+        $propiedades = Propiedad::all(); 
+        return view('propiedades.new');
+
     }
 
     /**
@@ -32,8 +32,18 @@ class PropiedadController extends Controller
      */
     public function store(Request $request)
     {
-        Propiedad::create($request->all());
-        return redirect()->route('propiedades.index')->with('success', 'Propiedad creada correctamente.');
+        //almacena camhoso en proppiedad
+        $propiedad = new Propiedad();
+        $propiedad->direccion = $request->direccion;
+        $propiedad->tipo = $request->tipo;
+        $propiedad->tamano = $request->tamaño;
+        $propiedad->numero_habitaciones = $request->habitaciones;
+        $propiedad->precio = $request->precio;
+        $propiedad->estado = $request->estado;
+        $propiedad->save();
+        
+        return redirect()->route('propiedades.index');
+        
     }
 
     /**
@@ -51,7 +61,21 @@ class PropiedadController extends Controller
     public function update(Request $request, string $id)
     {
         $propiedad = Propiedad::find($id);
-        $propiedad->update($request->all());
+        $propiedad->direccion = $request->direccionHelp;
+        $propiedad->tipo = $request->tipoHelp;
+        $propiedad->tamaño = $request->tamañoHelp;
+        $propiedad->numero_de_habitaciones= $request->habitacionesHelp;
+        $propiedad->precio= $request->precioHelp;
+        $propiedad->estado= $request->estado;
+
+
+        $propiedad->save();
+
+        $propiedad = DB::table('propiedades')
+            ->select('propiedades.*')
+            ->get();
+
+
         return redirect()->route('propiedades.index')->with('success', 'Propiedad actualizada correctamente.');
     }
 
@@ -61,6 +85,12 @@ class PropiedadController extends Controller
     {
         $propiedad = Propiedad::find($id);
         $propiedad->delete();
+
+        $paquetes = DB::table('propiedades')
+            ->select('propiedades.*')
+            ->get();
+
+
         return redirect()->route('propiedades.index')->with('success', 'Propiedad eliminada correctamente.');
     }
 }

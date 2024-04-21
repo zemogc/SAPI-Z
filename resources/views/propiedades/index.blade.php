@@ -39,31 +39,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($propiedades as $propiedad)
-                                    <tr>
-                                        <th scope="row">{{ $propiedad->id }}</th>
-                                        <td>{{ $propiedad->dirección }}</td>
-                                        <td>{{ $propiedad->tipo }}</td>
-                                        <td>{{ $propiedad->tamaño }}</td>
-                                        <td>{{ $propiedad->número_de_habitaciones }}</td>
-                                        <td>{{ $propiedad->precio }}</td>
-                                        <td>{{ $propiedad->estado }}</td>
-                                        <td>
-                                            <a href="{{ route('propiedades.edit', ['propiedad' => $propiedad->id]) }}"
-                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                Editar propiedad
-                                            </a>
-                                            <form action="{{ route('propiedades.destroy', ['propiedad' => $propiedad->id]) }}"
-                                                method="POST" style="display: inline-block">
-                                                @method('delete')
-                                                @csrf
-                                                <input
-                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-                                                    type="submit" value="Eliminar">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach ($propiedades as $propiedad)
+<tr>
+    <th scope="row">{{ $propiedad->id }}</th>
+    <td>{{ $propiedad->direccion }}</td>
+    <td>{{ $propiedad->tipo }}</td>
+    <td>{{ $propiedad->tamaño }}</td>
+    <td>{{ $propiedad->numero_habitaciones }}</td>
+    <td>{{ $propiedad->precio }}</td>
+    <td>{{ $propiedad->estado }}</td>
+    <td>
+        <a href="{{ route('propiedades.edit', ['propiedad' => $propiedad->id]) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Editar
+        </a>
+        <form action="{{ route('propiedades.destroy', ['propiedad' => $propiedad->id]) }}" method='POST' style="display: inline-block">
+            @method('delete')
+            @csrf
+            <input class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" type="submit" value="Eliminar">
+          </form>
+             </td>
+            </tr>
+                    @endforeach
+
                             </tbody>
                         </table>
                     </div>

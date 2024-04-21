@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('teléfono');
+            $table->string('telefono');
             $table->string('email');
             $table->enum('tipo', ['comprador', 'vendedor', 'arrendatario']);
 

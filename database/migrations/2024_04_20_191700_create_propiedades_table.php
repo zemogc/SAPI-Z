@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('propiedades', function (Blueprint $table) {
             $table->id();
 
-            $table->string('dirección');
+            $table->string('direccion');
             $table->enum('tipo', ['casa', 'apartamento', 'local comercial']);
-            $table->integer('tamaño');
+            $table->string('tamano');
             $table->integer('numero_habitaciones');
             $table->string('precio');
             $table->enum('estado', ['disponible', 'vendida', 'arrendada']);

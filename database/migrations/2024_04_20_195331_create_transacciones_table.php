@@ -20,9 +20,9 @@ return new class extends Migration
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
 
-            $table->enum('tipo_transacción', ['venta', 'compra', 'arrendamiento']);
-            $table->date('fecha_transacción');
-            $table->integer('monto_transacción');
+            $table->enum('tipo_transaccion', ['venta', 'compra', 'arrendamiento']);
+            $table->date('fecha_transaccion');
+            $table->integer('monto_transaccion');
 
             $table->timestamps();
         });
