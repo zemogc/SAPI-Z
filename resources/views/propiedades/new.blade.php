@@ -22,17 +22,37 @@
                 <input type="text" require class="form-control" id="direccion" aria-describedby="direccionHelp" name="direccion" placeholder="Dirección de la propiedad">
             </div>
             <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo</label>
-                <input type="text" require class="form-control" id="tipo" aria-describedby="tipoHelp" name="tipo" placeholder="Tipo de propiedad">
+            <label for="tipo" class="form-label">Tipo</label>
+            <select class="form-select" id="tipo" aria-describedby="tipoHelp" name="tipo" required>
+            <option selected disabled value="">Seleccione el tipo de propiedad</option>
+            <option value="Casa">Casa</option>
+            <option value="Apartamento">Apartamento</option>
+            <option value="Local comercial">Local comercial</option>
+            </select>
             </div>
             <div class="mb-3">
                 <label for="tamaño" class="form-label">Tamaño</label>
                 <input type="text" require class="form-control" id="tamaño" aria-describedby="tamañoHelp" name="tamaño" placeholder="Tamaño de la propiedad">
             </div>
             <div class="mb-3">
-                <label for="habitaciones" class="form-label">Número de habitaciones</label>
-                <input type="number" require class="form-control" id="habitaciones" aria-describedby="habitacionesHelp" name="habitaciones" placeholder="Número de habitaciones">
-            </div>
+            <label for="habitaciones" class="form-label">Número de habitaciones</label>
+            <select class="form-select" id="habitaciones" name="habitaciones" required>
+            <option selected disabled value="">Seleccione el número de habitaciones</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            </select>
+            </div> 
+
             <div class="mb-3">
                 <label for="precio" class="form-label">Precio</label>
                 <input type="text" require class="form-control" id="precio" aria-describedby="precioHelp" name="precio" placeholder="Precio de la propiedad">
