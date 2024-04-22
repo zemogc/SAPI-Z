@@ -8,16 +8,16 @@
             background-position: center;
             height: 220vh;
             width: 220vh;
-            color: black; /* Cambiar color de texto a negro */
+            color: black; /
         }
 
         .content-container {
-            position: absolute; /* Posicionar contenido de manera absoluta dentro del contenedor */
-            top: 5%; /* Mover el contenido hacia arriba */
-            left: 40%; /* Mover el contenido hacia la izquierda */
-            transform: translate(-50%, -50%); /* Centrar completamente el contenido */
-            text-align: left; /* Alinear el texto a la izquierda */
-            max-width: 80%; /* Establecer un ancho máximo */
+            position: absolute; 
+            top: 5%; 
+            left: 40%; 
+            transform: translate(-50%, -50%); 
+            text-align: left; /
+            max-width: 80%; 
         }
     </style>
 
