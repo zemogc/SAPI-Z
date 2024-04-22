@@ -23,7 +23,7 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Sistema de Administración de Propiedades Inmobiliarias (SAPI)') }}
+            {{ __('SAPI es el sistema de Administración de Propiedades Inmobiliarias ') }}
         </h2>
     </x-slot>
 
