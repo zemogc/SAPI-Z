@@ -29,16 +29,26 @@
                 <input type="text" require class="form-control" id="direccion" aria-describedby="direccionHelp" name="direccion" placeholder="Dirección de la propiedad" value="{{ $propiedad->direccion }}">
             </div>
             <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo</label>
-                <input type="text" require class="form-control" id="tipo" aria-describedby="tipoHelp" name="tipo" placeholder="Tipo de propiedad" value="{{ $propiedad->tipo }}">
+            <label for="tipo" class="form-label">Tipo</label>
+            <select class="form-select" id="tipo" aria-describedby="tipoHelp" name="tipo" required>
+            <option disabled>Seleccione el tipo de propiedad</option>
+            <option value="Casa" {{ $propiedad->tipo == 'Casa' ? 'selected' : '' }}>Casa</option>
+            <option value="Apartamento" {{ $propiedad->tipo == 'Apartamento' ? 'selected' : '' }}>Apartamento</option>
+            <option value="Local comercial" {{ $propiedad->tipo == 'Local comercial' ? 'selected' : '' }}>Local comercial</option>
+            </select>
             </div>
             <div class="mb-3">
                 <label for="tamaño" class="form-label">Tamaño</label>
                 <input type="text" require class="form-control" id="tamaño" aria-describedby="tamañoHelp" name="tamaño" placeholder="Tamaño de la propiedad" value="{{ $propiedad->tamano }}">
             </div>
             <div class="mb-3">
-                <label for="habitaciones" class="form-label">Número de habitaciones</label>
-                <input type="number" require class="form-control" id="habitaciones" aria-describedby="habitacionesHelp" name="habitaciones" placeholder="Número de habitaciones" value="{{ $propiedad->numero_habitaciones }}">
+            <label for="habitaciones" class="form-label">Número de habitaciones</label>
+            <select class="form-select" id="habitaciones" aria-describedby="habitacionesHelp" name="habitaciones" required>
+            <option disabled selected value="">Seleccione el número de habitaciones</option>
+            @for ($i = 1; $i <= 12; $i++)
+            <option value="{{ $i }}" {{ $propiedad->numero_habitaciones == $i ? 'selected' : '' }}>{{ $i }}</option>
+            @endfor
+            </select>
             </div>
             <div class="mb-3">
                 <label for="precio" class="form-label">Precio</label>
