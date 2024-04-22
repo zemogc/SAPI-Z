@@ -23,7 +23,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.new');
+
     }
 
     /**
@@ -31,7 +32,17 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cliente = new Cliente();
+    $cliente->nombre = $request->nombre;
+    $cliente->apellido = $request->apellido;
+    $cliente->telefono = $request->telefono;
+    $cliente->email = $request->email;
+    $cliente->tipo = $request->tipo;
+    $cliente->save();
+
+    
+    return redirect()->route('clientes.index')->with('success', 'Cliente creado exitosamente.');
+
     }
 
     /**
