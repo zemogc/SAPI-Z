@@ -17,7 +17,7 @@
     <div class="container">
         <h1>Editar Propiedad</h1>
         <form method="POST" action="{{ route('propiedades.update', ['propiedad' => $propiedad->id]) }}">
-            @method('put')
+            @method('patch')
             @csrf
             <div class="mb-3">
                 <label for="id" class="form-label">Código</label>
@@ -34,11 +34,11 @@
             </div>
             <div class="mb-3">
                 <label for="tamaño" class="form-label">Tamaño</label>
-                <input type="text" require class="form-control" id="tamaño" aria-describedby="tamañoHelp" name="tamaño" placeholder="Tamaño de la propiedad" value="{{ $propiedad->tamaño }}">
+                <input type="text" require class="form-control" id="tamaño" aria-describedby="tamañoHelp" name="tamaño" placeholder="Tamaño de la propiedad" value="{{ $propiedad->tamano }}">
             </div>
             <div class="mb-3">
                 <label for="habitaciones" class="form-label">Número de habitaciones</label>
-                <input type="number" require class="form-control" id="habitaciones" aria-describedby="habitacionesHelp" name="habitaciones" placeholder="Número de habitaciones" value="{{ $propiedad->habitaciones }}">
+                <input type="number" require class="form-control" id="habitaciones" aria-describedby="habitacionesHelp" name="habitaciones" placeholder="Número de habitaciones" value="{{ $propiedad->numero_habitaciones }}">
             </div>
             <div class="mb-3">
                 <label for="precio" class="form-label">Precio</label>

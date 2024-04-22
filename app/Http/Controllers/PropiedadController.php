@@ -61,12 +61,12 @@ class PropiedadController extends Controller
     public function update(Request $request, string $id)
     {
         $propiedad = Propiedad::find($id);
-        $propiedad->direccion = $request->direccionHelp;
-        $propiedad->tipo = $request->tipoHelp;
-        $propiedad->tamaño = $request->tamañoHelp;
-        $propiedad->numero_de_habitaciones= $request->habitacionesHelp;
-        $propiedad->precio= $request->precioHelp;
-        $propiedad->estado= $request->estado;
+        $propiedad->direccion = $request->direccion;
+        $propiedad->tipo = $request->tipo;
+        $propiedad->tamano = $request->tamaño;
+        $propiedad->numero_habitaciones = $request->habitaciones;
+        $propiedad->precio = $request->precio;
+        $propiedad->estado = $request->estado;
 
 
         $propiedad->save();
