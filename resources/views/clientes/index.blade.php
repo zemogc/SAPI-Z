@@ -33,7 +33,7 @@
                                     <th scope="col">Teléfono</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Tipo</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>

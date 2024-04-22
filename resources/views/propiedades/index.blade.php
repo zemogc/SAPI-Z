@@ -35,7 +35,7 @@
                                     <th scope="col">Número de Habitaciones</th>
                                     <th scope="col">Precio</th>
                                     <th scope="col">Estado</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
