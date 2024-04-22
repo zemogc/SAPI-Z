@@ -32,7 +32,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $cliente = new Cliente();
+    $cliente = new Cliente();
     $cliente->nombre = $request->nombre;
     $cliente->apellido = $request->apellido;
     $cliente->telefono = $request->telefono;
@@ -58,7 +58,8 @@ class ClienteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
@@ -66,7 +67,20 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'telefono' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'tipo' => 'required|in:comprador,vendedor,arrendatario',
+        ]);
+
+        $cliente->update($request->all());
+
+        return redirect()->route('clientes.index')
+                         ->with('success', 'Cliente actualizado correctamente.');
     }
 
     /**
