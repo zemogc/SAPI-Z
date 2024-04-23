@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\Transaccion;
 use Illuminate\Http\Request;
 
 class TransaccionController extends Controller

@@ -39,11 +39,11 @@ Route::middleware('auth')->group(function () {
 
 //rutas de CRUD Transacciones
     Route::get('/transacciones', [TransaccionController::class, 'index'])->name('transacciones.index');
-    Route::get('/transaccions/create', [TransaccionController::class, 'create'])->name('transacciones.create');
-    Route::post('/clientes', [TransaccionController::class, 'store'])->name('transacciones.store');
-    Route::get('/clientes/{cliente}/edit', [TransaccionController::class, 'edit'])->name('transacciones.edit');
-    Route::patch('/clientes/{cliente}', [TransaccionController::class, 'update'])->name('transacciones.update');
-    Route::delete('/clientes/{cliente}', [TransaccionController::class, 'destroy'])->name('transacciones.destroy');
+    Route::get('/transacciones/create', [TransaccionController::class, 'create'])->name('transacciones.create');
+    Route::post('/transacciones', [TransaccionController::class, 'store'])->name('transacciones.store');
+    Route::get('/transacciones/{transaccion}/edit', [TransaccionController::class, 'edit'])->name('transacciones.edit');
+    Route::patch('/transacciones/{transaccion}', [TransaccionController::class, 'update'])->name('transacciones.update');
+    Route::delete('/transacciones/{transaccion}', [TransaccionController::class, 'destroy'])->name('transacciones.destroy');
     
 });
 
