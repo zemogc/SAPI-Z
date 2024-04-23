@@ -45,7 +45,12 @@ class TransaccionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $transaccion = Transaccion::findOrFail($id);
+        // Obtener propiedades y clientes disponibles
+        $propiedades = Propiedad::all();
+        $clientes = Cliente::all();
+        return view('transacciones.edit', compact('transaccion', 'propiedades', 'clientes'));
+    
     }
 
     /**
@@ -53,7 +58,15 @@ class TransaccionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $transaccion = Transaccion::findOrFail($id);
+    $transaccion->propiedad_id = $request->propiedad_id;
+    $transaccion->cliente_id = $request->cliente_id;
+    $transaccion->tipo_transaccion = $request->tipo_transaccion;
+    $transaccion->fecha_transaccion = $request->fecha_transaccion;
+    $transaccion->monto_transaccion = $request->monto_transaccion;
+    $transaccion->save();
+    return redirect()->route('transacciones.index')->with('success', 'Transacción actualizada correctamente.');
+
     }
 
     /**
