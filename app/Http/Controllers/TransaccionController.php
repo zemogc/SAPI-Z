@@ -21,7 +21,8 @@ class TransaccionController extends Controller
      */
     public function create()
     {
-        //
+        $transacciones = Transacciones::all(); 
+        return view('propiedades.new');
     }
 
     /**
@@ -29,7 +30,24 @@ class TransaccionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'propiedad_id' => 'required|exists:propiedades,id',
+            'cliente_id' => 'required|exists:clientes,id',
+            'tipo_transaccion' => 'required|in:venta,compra,arrendamiento',
+            'fecha_transaccion' => 'required|date',
+            'monto_transaccion' => 'required|numeric|min:0',
+        ]);
+    
+        Transaccion::create([
+            'propiedad_id' => $request->propiedad_id,
+            'cliente_id' => $request->cliente_id,
+            'tipo_transaccion' => $request->tipo_transaccion,
+            'fecha_transaccion' => $request->fecha_transaccion,
+            'monto_transaccion' => $request->monto_transaccion,
+        ]);
+    
+        return redirect()->route('transacciones.index')->with('success', 'Transacción creada correctamente.');
+    
     }
 
     /**
@@ -74,6 +92,9 @@ class TransaccionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $transaccion = Transaccion::findOrFail($id);
+        $transaccion->delete();
+        return redirect()->route('transacciones.index')->with('success', 'Transacción eliminada correctamente.');
+    
     }
 }
