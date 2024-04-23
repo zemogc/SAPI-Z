@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaccion;
+use App\Models\Propiedad;//Relacion de lasa 2 tablas entonces aplica poo y se tienen en cuenta amabaspara rrelacionar
+use App\Models\Cliente;
+
 use Illuminate\Http\Request;
 
 class TransaccionController extends Controller
@@ -22,8 +25,9 @@ class TransaccionController extends Controller
      */
     public function create()
     {
-        $transacciones = Transacciones::all(); 
-        return view('propiedades.new');
+        $propiedades = Propiedad::all();
+        $clientes = Cliente::all();
+        return view('transacciones.new', ['propiedades' => $propiedades, 'clientes' => $clientes]);
     }
 
     /**
