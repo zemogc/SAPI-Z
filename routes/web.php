@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropiedadController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\TransaccionController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,6 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])->name('clientes.edit');
     Route::patch('/clientes/{cliente}', [ClienteController::class, 'update'])->name('clientes.update');
     Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
+
+
+//rutas de CRUD Transacciones
+    Route::get('/transacciones', [TransaccionController::class, 'index'])->name('transacciones.index');
+    Route::get('/transaccions/create', [TransaccionController::class, 'create'])->name('transacciones.create');
+    Route::post('/clientes', [TransaccionController::class, 'store'])->name('transacciones.store');
+    Route::get('/clientes/{cliente}/edit', [TransaccionController::class, 'edit'])->name('transacciones.edit');
+    Route::patch('/clientes/{cliente}', [TransaccionController::class, 'update'])->name('transacciones.update');
+    Route::delete('/clientes/{cliente}', [TransaccionController::class, 'destroy'])->name('transacciones.destroy');
     
 });
 
