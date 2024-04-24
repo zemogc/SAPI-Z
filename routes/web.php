@@ -37,14 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
 
 
-//rutas de CRUD Transacciones
-    Route::get('/transacciones', [TransaccionController::class, 'index'])->name('transacciones.index');
-    Route::get('/transacciones/create', [TransaccionController::class, 'create'])->name('transacciones.create');
-    Route::post('/transacciones', [TransaccionController::class, 'store'])->name('transacciones.store');
-    Route::get('/transacciones/{transaccion}/edit', [TransaccionController::class, 'edit'])->name('transacciones.edit');
-    Route::patch('/transacciones/{transaccion}', [TransaccionController::class, 'update'])->name('transacciones.update');
-    Route::delete('/transacciones/{transaccion}', [TransaccionController::class, 'destroy'])->name('transacciones.destroy');
-    
+// Rutas dCRUD Transacciones
+Route::get('/transacciones', [TransaccionController::class, 'index'])->name('transacciones.index');
+Route::get('/transacciones/create', [TransaccionController::class, 'create'])->name('transacciones.create');
+Route::post('/transacciones', [TransaccionController::class, 'store'])->name('transacciones.store');
+Route::get('/transacciones/{transaccion}/edit', [TransaccionController::class, 'edit'])->name('transacciones.edit');
+Route::put('/transacciones/{transaccion}', [TransaccionController::class, 'update'])->name('transacciones.update');
+Route::delete('/transacciones/{transaccion}', [TransaccionController::class, 'destroy'])->name('transacciones.destroy');
+
 });
 
 require __DIR__.'/auth.php';
