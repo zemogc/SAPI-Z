@@ -65,8 +65,7 @@ class PropiedadController extends Controller
         $propiedad->tipo = $request->tipo;
         $propiedad->tamano = $request->tamaño;
         $propiedad->numero_habitaciones = $request->habitaciones;
-        $propiedad->precio = $precio;
-
+        $propiedad->precio = $request->precio;
         $propiedad->estado = $request->estado;
 
 
