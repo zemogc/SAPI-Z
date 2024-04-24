@@ -13,18 +13,20 @@ return new class extends Migration
     {
         Schema::create('transacciones', function (Blueprint $table) {
             $table->id();
-
+        
             $table->unsignedBigInteger('propiedad_id');
             $table->foreign('propiedad_id')->references('id')->on('propiedades');
-
+        
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes');
-
+        
             $table->enum('tipo_transaccion', ['venta', 'compra', 'arrendamiento']);
             $table->date('fecha_transaccion');
-            $table->integer('monto_transaccion');
-
+            $table->decimal('monto_transaccion', 15, 2); 
+        
             $table->timestamps();
+        
+        
         });
     }
 

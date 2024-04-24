@@ -17,9 +17,7 @@ class TransaccionController extends Controller
     public function index()
     {
         $transacciones = Transaccion::all(); 
-        $propiedades = Propiedad::all(); // datos en prop
-        $clientes = Cliente::all(); // dattos en cli
-        return view('transacciones.index', ['transacciones' => $transacciones, 'propiedades' => $propiedades, 'clientes' => $clientes]);
+        return view('transacciones.index', ['transacciones' => $transacciones]);
     }
 
     /**

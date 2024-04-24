@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('propiedades', function (Blueprint $table) {
             $table->id();
-
+        
             $table->string('direccion');
             $table->enum('tipo', ['casa', 'apartamento', 'local comercial']);
             $table->string('tamano');
             $table->integer('numero_habitaciones');
-            $table->string('precio');
+            $table->decimal('precio', 15, 2); 
             $table->enum('estado', ['disponible', 'vendida', 'arrendada']);
-    
+        
             $table->timestamps();
         });
     }
