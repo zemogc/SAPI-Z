@@ -44,8 +44,8 @@
     <th scope="row">{{ $propiedad->id }}</th>
     <td>{{ $propiedad->direccion }}</td>
     <td>{{ $propiedad->tipo }}</td>
-    <td>{{ $propiedad->tamaño }}</td>
-    <td>{{ $propiedad->numero_habitaciones }}</td>
+    <td>{{ $propiedad->tamano }}</td>
+    <td class="text-center">{{ $propiedad->numero_habitaciones }}</td>
     <td>{{ $propiedad->precio }}</td>
     <td>{{ $propiedad->estado }}</td>
     <td>
