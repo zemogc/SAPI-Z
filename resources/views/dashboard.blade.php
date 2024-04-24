@@ -31,7 +31,6 @@
         <div class="content-container">
             <h1 class="text-3xl font-bold mb-4">{{ __("Bienvenido") }}</h1>
             <p class="mb-4">Bienvenido a la web en la que podras realizar la gestión de propiedades inmobiliarias, facilitando operaciones CRUD para propiedades, clientes y transacciones.</p>
-            <p class="mb-8">Desarrollado por Zemog Gómez y Juan González.</p>
         </div>
     </div>
 </x-app-layout>
