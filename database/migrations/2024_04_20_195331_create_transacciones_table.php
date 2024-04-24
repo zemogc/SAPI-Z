@@ -22,7 +22,7 @@ return new class extends Migration
         
             $table->enum('tipo_transaccion', ['venta', 'compra', 'arrendamiento']);
             $table->date('fecha_transaccion');
-            $table->decimal('monto_transaccion', 15, 2); 
+            $table->string('monto_transaccion');
         
             $table->timestamps();
         

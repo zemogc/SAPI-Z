@@ -18,7 +18,8 @@ return new class extends Migration
             $table->enum('tipo', ['casa', 'apartamento', 'local comercial']);
             $table->string('tamano');
             $table->integer('numero_habitaciones');
-            $table->decimal('precio', 15, 2); 
+            $table->string('precio');
+
             $table->enum('estado', ['disponible', 'vendida', 'arrendada']);
         
             $table->timestamps();

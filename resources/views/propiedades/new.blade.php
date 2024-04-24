@@ -54,8 +54,8 @@
             </div> 
 
             <div class="mb-3">
-                <label for="precio" class="form-label">Precio</label>
-                <input type="text" require class="form-control" id="precio" aria-describedby="precioHelp" name="precio" placeholder="Precio de la propiedad">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio de la propiedad (ej. 100.000.000)" required>
             </div>
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>

@@ -62,7 +62,7 @@
                             </div>
                             <div class="mb-3">
                             <label for="monto_transaccion" class="form-label">Monto de Transacción</label>
-                            <input type="text" class="form-control" id="monto_transaccion" name="monto_transaccion" required pattern="\d{1,3}(?:[.,']\d{3})*" title="Ingrese un monto válido">
+                            <input type="text" class="form-control" id="monto_transaccion" name="monto_transaccion" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                             <a href="{{ route('transacciones.index') }}" class="btn btn-warning">Cancelar</a>
