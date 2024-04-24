@@ -14,7 +14,6 @@
 
 <body>
 
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -50,7 +49,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="tipo_transaccion" class="form-label">Tipo de Transacción</label>
-                                <input type="text" class="form-control" id="tipo_transaccion" name="tipo_transaccion" required placeholder="Tipo de transacción">
+                                <select class="form-select" id="tipo_transaccion" name="tipo_transaccion" required>
+                                    <option selected disabled value="">Seleccione el tipo de transacción</option>
+                                    <option value="venta">Venta</option>
+                                    <option value="compra">Compra</option>
+                                    <option value="arrendamiento">Arrendamiento</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="fecha_transaccion" class="form-label">Fecha de Transacción</label>
@@ -64,9 +68,16 @@
                             <a href="{{ route('transacciones.index') }}" class="btn btn-warning">Cancelar</a>
                         </form>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
