@@ -9,7 +9,36 @@
 
 ## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+SAPI es una aplicación web desarrollada en Laravel para la gestión de propiedades inmobiliarias. Facilita operaciones CRUD para propiedades, clientes y transacciones.
+
+## Requisitos
+
+- PHP >= 7.3
+- Composer
+- Laravel >= 8.x
+- Base de datos MySQL
+
+## Instalación
+
+1. Clona el repositorio en tu máquina local.
+2. Navega hasta el directorio del proyecto.
+3. Ejecuta `composer install` para instalar las dependencias.
+4. Copia `.env.example` a `.env` y configura tu base de datos y otras variables de entorno.
+5. Ejecuta `php artisan key:generate` para generar una clave de aplicación.
+6. Ejecuta `php artisan migrate` para crear las tablas en tu base de datos.
+7. Ejecuta `php artisan serve` para iniciar el servidor de desarrollo.
+
+## Uso
+
+Una vez que el servidor esté en funcionamiento, puedes navegar a `http://localhost:8000` en tu navegador web para acceder a la aplicación. Desde allí, puedes registrar una nueva cuenta y comenzar a utilizar la aplicación.
+
+## Contribución
+
+Para contribuir al proyecto, crea una nueva rama a partir de la rama `main`. Una vez que hayas terminado de implementar tu característica o corregir un bug, abre una solicitud de extracción para fusionar tu rama con `main`.
+
+## Licencia
+
+Este proyecto está licenciado bajo la licencia MIT.
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
