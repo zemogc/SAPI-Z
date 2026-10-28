@@ -25,7 +25,7 @@
         </p>
 
         <div class="mt-4 flex items-center gap-4 border-t border-slate-100 pt-4 text-sm text-slate-600">
-            <span class="flex items-center gap-1.5"><x-icon name="square" class="h-4 w-4 text-slate-400" /> {{ (float) $propiedad->tamano }} m²</span>
+            <span class="flex items-center gap-1.5 whitespace-nowrap"><x-icon name="square" class="h-4 w-4 text-slate-400" /> {{ (float) $propiedad->tamano }} m²</span>
             @if ($propiedad->numero_habitaciones)
                 <span class="flex items-center gap-1.5"><x-icon name="bed" class="h-4 w-4 text-slate-400" /> {{ $propiedad->numero_habitaciones }}</span>
             @endif
