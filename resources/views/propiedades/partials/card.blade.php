@@ -24,7 +24,7 @@
             <x-icon name="map-pin" class="h-4 w-4" /> {{ $propiedad->ciudad ?? 'Sin ciudad' }}
         </p>
 
-        <div class="mt-4 flex items-center gap-4 border-t border-slate-100 pt-4 text-sm text-slate-600">
+        <div class="mt-4 flex items-center gap-3 border-t border-slate-100 pt-4 text-sm text-slate-600">
             <span class="flex items-center gap-1.5 whitespace-nowrap"><x-icon name="square" class="h-4 w-4 text-slate-400" /> {{ (float) $propiedad->tamano }} m²</span>
             @if ($propiedad->numero_habitaciones)
                 <span class="flex items-center gap-1.5"><x-icon name="bed" class="h-4 w-4 text-slate-400" /> {{ $propiedad->numero_habitaciones }}</span>
@@ -32,7 +32,7 @@
             @if ($propiedad->banos)
                 <span class="flex items-center gap-1.5"><x-icon name="bath" class="h-4 w-4 text-slate-400" /> {{ $propiedad->banos }}</span>
             @endif
-            <span class="ml-auto flex">
+            <span class="-mr-2 ml-auto flex shrink-0">
                 <a href="{{ route('propiedades.edit', $propiedad) }}" class="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700" title="Editar">
                     <x-icon name="pencil" class="h-4 w-4" />
                 </a>

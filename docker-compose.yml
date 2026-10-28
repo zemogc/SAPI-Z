@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    container_name: sapi-z
+    ports:
+      - "8000:8000"
+    environment:
+      DB_DATABASE: /app/database/data/database.sqlite
+      # Opcional: activa el asistente con Claude. Sin clave funciona en modo local.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    volumes:
+      - sapiz-db:/app/database/data
+
+volumes:
+  sapiz-db:
