@@ -1,121 +1,72 @@
-<nav x-data="{ open: false }" class="bg-blue-100 border-b border-blue-200">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex items-center">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <img src="/images/agente.png" alt="Logo Agente" class="block h-9 w-auto">
-                    </a>
-                </div>
+@php
+    $enlaces = [
+        ['dashboard', 'dashboard', 'chart', 'Panel'],
+        ['propiedades.index', 'propiedades.*', 'building', 'Propiedades'],
+        ['clientes.index', 'clientes.*', 'users', 'Clientes'],
+        ['transacciones.index', 'transacciones.*', 'banknotes', 'Transacciones'],
+    ];
+    if (Route::has('asistente.index')) {
+        $enlaces[] = ['asistente.index', 'asistente.*', 'sparkles', 'Asistente IA'];
+    }
+@endphp
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-blue-800 hover:text-blue-900">
-                        {{ __('Inicio') }}
-                    </x-nav-link>
-                </div>
+{{-- Fondo del menú móvil --}}
+<div x-show="menu" x-cloak x-transition.opacity @click="menu = false" class="fixed inset-0 z-40 bg-ink-900/60 lg:hidden"></div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('propiedades.index')" :active="request()->routeIs('propiedades.index')" class="text-blue-800 hover:text-blue-900">
-                        {{ __('Propiedades') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.index')" class="text-blue-800 hover:text-blue-900">
-                        {{ __('Clientes') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('transacciones.index')" :active="request()->routeIs('transacciones.index')" class="text-blue-800 hover:text-blue-900">
-                        {{ __('Transacciones') }}
-                    </x-nav-link>
-                </div>
-
+<aside :class="menu ? 'translate-x-0' : '-translate-x-full'"
+       class="fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-ink-900 text-slate-300 transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
+    <div class="flex items-center justify-between px-6 py-6">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
+            <x-application-logo class="h-10 w-10" />
+            <div>
+                <p class="text-lg font-extrabold leading-none tracking-tight text-white">SAPI<span class="text-brand-400">-Z</span></p>
+                <p class="mt-1 text-[11px] font-medium uppercase tracking-widest text-slate-500">Gestión inmobiliaria</p>
             </div>
+        </a>
+        <button @click="menu = false" class="rounded-lg p-1 text-slate-400 hover:text-white lg:hidden" aria-label="Cerrar menú">
+            <x-icon name="x" class="h-6 w-6" />
+        </button>
+    </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-800 bg-blue-200 hover:text-blue-900 hover:bg-blue-300 focus:outline-none focus:bg-blue-300 focus:text-blue-900 transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+    <nav class="flex-1 space-y-1 px-4">
+        <p class="px-3 pb-2 pt-4 text-[11px] font-semibold uppercase tracking-widest text-slate-500">Menú</p>
+        @foreach ($enlaces as [$ruta, $patron, $icono, $texto])
+            @php $activo = request()->routeIs($patron); @endphp
+            <a href="{{ route($ruta) }}"
+               @class([
+                   'group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition',
+                   'bg-white/10 text-white' => $activo,
+                   'hover:bg-white/5 hover:text-white' => ! $activo,
+               ])>
+                <x-icon :name="$icono" @class(['h-5 w-5', 'text-brand-400' => $activo, 'text-slate-500 group-hover:text-slate-300' => ! $activo]) />
+                {{ $texto }}
+                @if ($icono === 'sparkles')
+                    <span class="ml-auto rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-2 py-0.5 text-[10px] font-bold text-white">IA</span>
+                @endif
+            </a>
+        @endforeach
+    </nav>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')" class="text-blue-800 hover:text-blue-900">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();" class="text-blue-800 hover:text-blue-900">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
+    <div class="border-t border-white/10 p-4">
+        <div class="flex items-center gap-3 rounded-xl px-2 py-2">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-500/20 text-sm font-bold text-brand-300">
+                {{ mb_strtoupper(mb_substr(Auth::user()->name, 0, 1)) }}
             </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-blue-400 hover:text-blue-500 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+            <div class="min-w-0 flex-1">
+                <p class="truncate text-sm font-semibold text-white">{{ Auth::user()->name }}</p>
+                <p class="truncate text-xs text-slate-500">{{ Auth::user()->email }}</p>
+            </div>
+        </div>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+            <a href="{{ route('profile.edit') }}" class="flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium hover:bg-white/5 hover:text-white">
+                <x-icon name="user" class="h-4 w-4" /> Perfil
+            </a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium hover:bg-white/5 hover:text-white">
+                    <x-icon name="logout" class="h-4 w-4" /> Salir
                 </button>
-            </div>
+            </form>
         </div>
     </div>
-</nav>
-
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+</aside>

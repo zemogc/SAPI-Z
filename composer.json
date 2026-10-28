@@ -1,8 +1,14 @@
 {
-    "name": "laravel/laravel",
+    "name": "zemogc/sapi-z",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "SAPI-Z: sistema de administración de propiedades inmobiliarias con asistente de IA.",
+    "keywords": [
+        "laravel",
+        "inmobiliaria",
+        "crm",
+        "claude",
+        "ia"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -24,7 +30,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Support/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
