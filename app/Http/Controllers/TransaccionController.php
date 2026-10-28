@@ -2,101 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use App\Models\Transaccion;
-use App\Models\Propiedad;
+use App\Http\Requests\TransaccionRequest;
 use App\Models\Cliente;
+use App\Models\Propiedad;
+use App\Models\Transaccion;
 use Illuminate\Http\Request;
 
 class TransaccionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $transacciones = Transaccion::all(); 
-        return view('transacciones.index', ['transacciones' => $transacciones]);
+        $filtrar = fn ($query) => $query
+            ->when($request->query('tipo'), fn ($q, $tipo) => $q->where('tipo_transaccion', $tipo))
+            ->when($request->query('desde'), fn ($q, $desde) => $q->whereDate('fecha_transaccion', '>=', $desde))
+            ->when($request->query('hasta'), fn ($q, $hasta) => $q->whereDate('fecha_transaccion', '<=', $hasta));
+
+        $transacciones = $filtrar(Transaccion::with(['propiedad', 'cliente']))
+            ->latest('fecha_transaccion')
+            ->latest('id')
+            ->paginate(15)
+            ->withQueryString();
+
+        $total = $filtrar(Transaccion::query())->sum('monto_transaccion');
+
+        return view('transacciones.index', compact('transacciones', 'total'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        $propiedades = Propiedad::all();
-        $clientes = Cliente::all();
-        return view('transacciones.new', ['propiedades' => $propiedades, 'clientes' => $clientes]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        \Log::info('Datos recibidos en el formulario:', $request->all());
-
-        $request->validate([
-            'propiedad_id' => 'required|exists:propiedades,id',
-            'cliente_id' => 'required|exists:clientes,id',
-            'tipo_transaccion' => 'required|in:venta,compra,arrendamiento',
-            'fecha_transaccion' => 'required|date',
-            'monto_transaccion' => 'required|string', 
+        return view('transacciones.new', [
+            'transaccion' => new Transaccion([
+                'propiedad_id' => $request->query('propiedad'),
+                'fecha_transaccion' => now(),
+            ]),
+            'propiedades' => Propiedad::orderBy('direccion')->get(),
+            'clientes' => Cliente::orderBy('nombre')->get(),
         ]);
-
-        try {
-            Transaccion::create([
-                'propiedad_id' => $request->propiedad_id,
-                'cliente_id' => $request->cliente_id,
-                'tipo_transaccion' => $request->tipo_transaccion,
-                'fecha_transaccion' => $request->fecha_transaccion,
-                'monto_transaccion' => $request->monto_transaccion,
-            ]);
-        
-            \Log::info('Transacción creada correctamente.');
-
-            return redirect()->route('transacciones.index')->with('success', 'Transacción creada correctamente.');
-        } catch (\Exception $e) {
-            \Log::error('Error al crear la transacción: ' . $e->getMessage());
-
-            return redirect()->back()->withInput()->withErrors(['error' => 'Error al crear la transacción. Por favor, inténtalo de nuevo.']);
-        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function store(TransaccionRequest $request)
     {
-        $transaccion = Transaccion::findOrFail($id);
-        $propiedades = Propiedad::all();
-        $clientes = Cliente::all();
-        return view('transacciones.edit', compact('transaccion', 'propiedades', 'clientes'));
+        Transaccion::create($request->validated());
+
+        return redirect()->route('transacciones.index')->with('success', 'Transacción registrada correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function edit(Transaccion $transaccion)
     {
-        $transaccion = Transaccion::findOrFail($id);
-        $transaccion->propiedad_id = $request->propiedad_id;
-        $transaccion->cliente_id = $request->cliente_id;
-        $transaccion->tipo_transaccion = $request->tipo_transaccion;
-        $transaccion->fecha_transaccion = $request->fecha_transaccion;
-        $transaccion->monto_transaccion = $request->monto_transaccion;
-        $transaccion->save();
+        return view('transacciones.edit', [
+            'transaccion' => $transaccion,
+            'propiedades' => Propiedad::orderBy('direccion')->get(),
+            'clientes' => Cliente::orderBy('nombre')->get(),
+        ]);
+    }
+
+    public function update(TransaccionRequest $request, Transaccion $transaccion)
+    {
+        $transaccion->update($request->validated());
+
         return redirect()->route('transacciones.index')->with('success', 'Transacción actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Transaccion $transaccion)
     {
-        $transaccion = Transaccion::findOrFail($id);
         $transaccion->delete();
+
         return redirect()->route('transacciones.index')->with('success', 'Transacción eliminada correctamente.');
     }
 }
-

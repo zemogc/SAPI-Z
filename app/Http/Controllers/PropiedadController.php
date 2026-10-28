@@ -2,95 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PropiedadRequest;
+use App\Models\Propiedad;
 use Illuminate\Http\Request;
-use App\Models\Propiedad; 
-use Illuminate\Support\Facades\DB;
 
 class PropiedadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $propiedades = Propiedad::all(); 
-        return view('propiedades.index', ['propiedades' => $propiedades]);
+        $propiedades = Propiedad::query()
+            ->buscar($request->query('q'))
+            ->when($request->query('tipo'), fn ($q, $tipo) => $q->where('tipo', $tipo))
+            ->when($request->query('estado'), fn ($q, $estado) => $q->where('estado', $estado))
+            ->latest('id')
+            ->paginate(9)
+            ->withQueryString();
+
+        return view('propiedades.index', compact('propiedades'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $propiedades = Propiedad::all(); 
-        return view('propiedades.new');
-
+        return view('propiedades.new', ['propiedad' => new Propiedad(['estado' => 'disponible'])]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(PropiedadRequest $request)
     {
-        //almacena camhoso en proppiedad
-        $propiedad = new Propiedad();
-        $propiedad->direccion = $request->direccion;
-        $propiedad->tipo = $request->tipo;
-        $propiedad->tamano = $request->tamaño;
-        $propiedad->numero_habitaciones = $request->habitaciones;
-        $propiedad->precio = $request->precio;
-        $propiedad->estado = $request->estado;
-        $propiedad->save();
-        
-        return redirect()->route('propiedades.index');
-        
+        $propiedad = Propiedad::create($request->validated());
+
+        return redirect()->route('propiedades.show', $propiedad)
+            ->with('success', 'Propiedad creada correctamente.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function show(Propiedad $propiedad)
     {
-        $propiedad = Propiedad::find($id);
-        return view('propiedades.edit', ['propiedad' => $propiedad]);
-    }
+        $propiedad->load(['transacciones' => fn ($q) => $q->with('cliente')->latest('fecha_transaccion')]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $propiedad = Propiedad::find($id);
-        $propiedad->direccion = $request->direccion;
-        $propiedad->tipo = $request->tipo;
-        $propiedad->tamano = $request->tamaño;
-        $propiedad->numero_habitaciones = $request->habitaciones;
-        $propiedad->precio = $request->precio;
-        $propiedad->estado = $request->estado;
-
-
-        $propiedad->save();
-
-        $propiedad = DB::table('propiedades')
-            ->select('propiedades.*')
+        $similares = Propiedad::where('tipo', $propiedad->tipo)
+            ->whereKeyNot($propiedad->id)
+            ->latest('id')
+            ->take(3)
             ->get();
 
-
-        return redirect()->route('propiedades.index')->with('success', 'Propiedad actualizada correctamente.');
+        return view('propiedades.show', compact('propiedad', 'similares'));
     }
 
-    /**
-     */
-    public function destroy(string $id)
+    public function edit(Propiedad $propiedad)
     {
-        $propiedad = Propiedad::find($id);
+        return view('propiedades.edit', compact('propiedad'));
+    }
+
+    public function update(PropiedadRequest $request, Propiedad $propiedad)
+    {
+        $propiedad->update($request->validated());
+
+        return redirect()->route('propiedades.show', $propiedad)
+            ->with('success', 'Propiedad actualizada correctamente.');
+    }
+
+    public function destroy(Propiedad $propiedad)
+    {
+        if ($propiedad->transacciones()->exists()) {
+            return back()->with('error', 'No se puede eliminar: la propiedad tiene transacciones registradas.');
+        }
+
         $propiedad->delete();
 
-        $paquetes = DB::table('propiedades')
-            ->select('propiedades.*')
-            ->get();
-
-
-        return redirect()->route('propiedades.index')->with('success', 'Propiedad eliminada correctamente.');
+        return redirect()->route('propiedades.index')
+            ->with('success', 'Propiedad eliminada correctamente.');
     }
 }
