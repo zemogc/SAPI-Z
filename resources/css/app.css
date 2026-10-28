@@ -47,3 +47,42 @@
 [x-cloak] {
     display: none !important;
 }
+
+/* Respuestas del asistente renderizadas desde markdown */
+.respuesta-ia > * + * {
+    @apply mt-3;
+}
+
+.respuesta-ia ul {
+    @apply list-disc space-y-1 pl-5;
+}
+
+.respuesta-ia ol {
+    @apply list-decimal space-y-1 pl-5;
+}
+
+.respuesta-ia strong {
+    @apply font-semibold text-slate-900;
+}
+
+.respuesta-ia h1,
+.respuesta-ia h2,
+.respuesta-ia h3 {
+    @apply font-semibold text-slate-900;
+}
+
+.respuesta-ia table {
+    @apply w-full overflow-hidden rounded-lg text-xs;
+}
+
+.respuesta-ia th {
+    @apply bg-white/70 px-3 py-2 text-left font-semibold;
+}
+
+.respuesta-ia td {
+    @apply border-t border-slate-200 px-3 py-2;
+}
+
+.respuesta-ia code {
+    @apply rounded bg-white px-1 py-0.5 text-xs;
+}

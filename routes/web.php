@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AsistenteController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +33,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('transacciones', TransaccionController::class)
         ->parameters(['transacciones' => 'transaccion'])
         ->except('show');
+
+    Route::prefix('asistente')->name('asistente.')->controller(AsistenteController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+
+        Route::middleware('throttle:asistente')->group(function () {
+            Route::post('preguntar', 'preguntar')->name('preguntar');
+            Route::post('describir', 'describir')->name('describir');
+            Route::post('estimar', 'estimar')->name('estimar');
+        });
+    });
 });
 
 require __DIR__.'/auth.php';

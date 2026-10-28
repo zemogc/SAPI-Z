@@ -47,8 +47,6 @@
         <x-field label="Descripción" name="descripcion">
             <textarea id="descripcion" name="descripcion" rows="6" class="input" placeholder="Cuenta lo que hace especial a este inmueble…">{{ old('descripcion', $propiedad->descripcion) }}</textarea>
         </x-field>
-
-        @stack('form-extra')
     </div>
 
     <div class="space-y-6">
@@ -66,7 +64,7 @@
             <p class="text-xs text-slate-500">El estado se actualiza solo al registrar una venta o arrendamiento.</p>
         </div>
 
-        @stack('form-aside')
+        @includeWhen(Route::has('asistente.describir'), 'propiedades.partials.asistente')
 
         <div class="flex gap-3">
             <button type="submit" class="btn-primary flex-1">Guardar</button>
