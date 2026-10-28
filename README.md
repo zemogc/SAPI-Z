@@ -1,95 +1,162 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+
+<img src="public/favicon.svg" width="72" alt="Logo de SAPI-Z">
+
+# SAPI-Z
+
+**Sistema de Administración de Propiedades Inmobiliarias con asistente de IA**
+
+Gestiona inventario, clientes y negocios en un solo lugar, mide tu operación en un panel
+y deja que la IA redacte anuncios, estime precios y responda preguntas sobre tu cartera.
+
+![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?logo=php&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
+![Alpine.js](https://img.shields.io/badge/Alpine.js-3-8BC0D0?logo=alpinedotjs&logoColor=white)
+![Claude](https://img.shields.io/badge/IA-Claude-D97757?logo=anthropic&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-59_passing-10b989)
+![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
+
+<img src="docs/screenshots/03-panel.png" alt="Panel principal de SAPI-Z" width="100%">
+
+</div>
+
+---
+
+## Contenido
+
+- [Funcionalidades](#funcionalidades)
+- [Capturas](#capturas)
+- [Asistente de IA](#asistente-de-ia)
+- [Inicio rápido](#inicio-rápido)
+- [Pruebas](#pruebas)
+- [Arquitectura](#arquitectura)
+- [Licencia](#licencia)
+
+## Funcionalidades
+
+| Módulo | Qué incluye |
+|---|---|
+| **Panel** | Ventas de los últimos 12 meses, valor del inventario disponible, ticket promedio, cánones de arriendo, gráfica mensual, precio por m² por ciudad y actividad reciente. |
+| **Propiedades** | Casas, apartamentos y locales con búsqueda, filtros por tipo y estado, ficha detallada, precio por m², historial de negocios y propiedades similares. |
+| **Clientes** | Compradores, vendedores y arrendatarios con número de negocios y volumen movido por cada uno. |
+| **Transacciones** | Ventas, compras y arrendamientos con filtros por tipo y fechas, total del periodo y exportación a CSV. |
+| **Estado automático** | Al registrar una venta la propiedad pasa a *vendida*; un arriendo la marca *arrendada*; si se borra el negocio, vuelve a *disponible*. |
+| **Asistente IA** | Redacción de anuncios, estimación de precio con comparables y chat sobre los datos de la cartera, con Claude. |
+
+Además: validación en español (acepta montos como `$ 350.000.000`), formato de pesos colombianos, diseño responsive y protección para no borrar registros con negocios asociados.
+
+## Capturas
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/01-portada.png" alt="Portada"><p align="center"><b>Portada pública</b></p></td>
+    <td width="50%"><img src="docs/screenshots/02-login.png" alt="Inicio de sesión"><p align="center"><b>Inicio de sesión</b></p></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/04-propiedades.png" alt="Listado de propiedades"><p align="center"><b>Inventario de propiedades</b></p></td>
+    <td><img src="docs/screenshots/05-detalle.png" alt="Detalle de propiedad"><p align="center"><b>Ficha de la propiedad</b></p></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/06-asistente-formulario.png" alt="Asistente en el formulario"><p align="center"><b>Descripción y precio sugeridos por el asistente</b></p></td>
+    <td><img src="docs/screenshots/07-asistente-chat.png" alt="Chat del asistente"><p align="center"><b>Chat sobre la cartera</b></p></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/08-clientes.png" alt="Clientes"><p align="center"><b>Clientes</b></p></td>
+    <td><img src="docs/screenshots/09-transacciones.png" alt="Transacciones"><p align="center"><b>Transacciones con exportación CSV</b></p></td>
+  </tr>
+</table>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="docs/screenshots/10-movil.png" alt="Vista móvil" width="280"><br>
+  <b>Vista móvil</b>
 </p>
 
-## About Laravel
+## Asistente de IA
 
-SAPI es una aplicación web desarrollada en Laravel para la gestión de propiedades inmobiliarias. Facilita operaciones CRUD para propiedades, clientes y transacciones.
+El asistente usa **Claude** a través del [SDK oficial de Anthropic para PHP](https://github.com/anthropics/anthropic-sdk-php).
 
-## Requisitos
+| Función | Cómo trabaja |
+|---|---|
+| **Redactar descripción** | Toma los datos del formulario y escribe un anuncio de dos párrafos sin inventar características. |
+| **Estimar precio** | Busca comparables del inventario (mismo tipo y ciudad), calcula percentiles del precio por m² y le pide a Claude un rango justificado con **salida JSON estructurada**. |
+| **Chat de la cartera** | Responde con los datos reales de propiedades, transacciones y clientes: *"¿qué propiedades llevan más tiempo disponibles?"*, *"resume las ventas del trimestre por ciudad"*. |
 
-- PHP >= 7.3
-- Composer
-- Laravel >= 8.x
-- Base de datos MySQL
+Detalles de la integración:
 
-## Instalación
+- Modelo configurable (`claude-opus-5-5` por defecto) con nivel de esfuerzo ajustable.
+- *Fallbacks* del lado del servidor: si el modelo declina una petición, la API la reintenta con otro.
+- El contexto de la cartera se envía con *prompt caching* para que las preguntas seguidas del chat sean más baratas.
+- Límite de 15 solicitudes por minuto por usuario y respuestas en markdown sin HTML.
 
-1. Clona el repositorio en tu máquina local.
-2. Navega hasta el directorio del proyecto.
-3. Ejecuta `composer install` para instalar las dependencias.
-4. Copia `.env.example` a `.env` y configura tu base de datos y otras variables de entorno.
-5. Ejecuta `php artisan key:generate` para generar una clave de aplicación.
-6. Ejecuta `php artisan migrate` para crear las tablas en tu base de datos.
-7. Ejecuta `php artisan serve` para iniciar el servidor de desarrollo.
+**Sin API key la app sigue funcionando en modo local**: plantilla para la descripción, estimación estadística con comparables y un resumen de la cartera en el chat. Para activar la IA:
 
-## Uso
+```env
+ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_MODEL=claude-opus-5-5   # opcional
+ANTHROPIC_EFFORT=low              # low | medium | high
+```
 
-Una vez que el servidor esté en funcionamiento, puedes navegar a `http://localhost:8000` en tu navegador web para acceder a la aplicación. Desde allí, puedes registrar una nueva cuenta y comenzar a utilizar la aplicación.
+## Inicio rápido
 
-## Contribución
+### Con Docker
 
-Para contribuir al proyecto, crea una nueva rama a partir de la rama `main`. Una vez que hayas terminado de implementar tu característica o corregir un bug, abre una solicitud de extracción para fusionar tu rama con `main`.
+```bash
+git clone https://github.com/zemogc/SAPI-Z.git
+cd SAPI-Z
+docker compose up --build
+```
+
+Abre <http://localhost:8000> e ingresa con **`demo@sapiz.co`** / **`password`**. El primer arranque crea la base SQLite con 36 propiedades, 24 clientes y un año de transacciones de ejemplo.
+
+Para activar el asistente: `ANTHROPIC_API_KEY=sk-ant-... docker compose up --build`.
+
+### Instalación local
+
+Requisitos: PHP 8.2+, Composer y Node.js 20+.
+
+```bash
+composer install
+npm install && npm run build
+cp .env.example .env
+php artisan key:generate
+touch database/database.sqlite
+php artisan migrate --seed
+php artisan serve
+```
+
+La configuración por defecto usa SQLite. Para MySQL, cambia `DB_CONNECTION` y las variables `DB_*` en `.env`.
+
+## Pruebas
+
+```bash
+php artisan test
+```
+
+59 pruebas cubren el CRUD, las validaciones, la sincronización del estado de las propiedades, los indicadores del panel, la exportación CSV y el asistente. Las pruebas del asistente usan un proveedor falso y un transporte HTTP simulado que verifica la petición exacta enviada a la API, así que no consumen tokens.
+
+## Arquitectura
+
+```
+app/
+├── Http/
+│   ├── Controllers/        Propiedades, clientes, transacciones, panel y asistente
+│   └── Requests/           Validación y normalización de montos
+├── Models/                 Propiedad, Cliente, Transaccion (+ sincronización de estado)
+├── Services/IA/
+│   ├── ProveedorIA.php     Contrato del modelo de lenguaje
+│   ├── ClaudeProveedor.php Implementación con el SDK de Anthropic
+│   └── AsistenteInmobiliario.php  Comparables, prompts y modo local
+└── Support/helpers.php     cop(): formato de pesos colombianos
+resources/
+├── views/                  Blade + componentes (icon, badge, field, flash…)
+└── js/                     Alpine.js, gráficas con Chart.js y cliente del asistente
+```
+
+**Stack:** Laravel 11 · Blade · Tailwind CSS · Alpine.js · Chart.js · SQLite/MySQL · SDK de Anthropic · PHPUnit.
 
 ## Licencia
 
-Este proyecto está licenciado bajo la licencia MIT.
+Distribuido bajo la licencia MIT. Consulta [LICENSE](LICENSE).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<p align="center">Hecho por <a href="https://github.com/zemogc">Zemog Gomez</a></p>
