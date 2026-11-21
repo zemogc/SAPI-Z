@@ -10,7 +10,8 @@ if (! function_exists('cop')) {
 
         if ($compacto) {
             return match (true) {
-                $valor >= 1_000_000_000 => '$ '.number_format($valor / 1_000_000_000, 1, ',', '.').' mil M',
+                // Desde 999.500.000 los millones redondeados ya serian "1.000 M"
+                $valor >= 999_500_000 => '$ '.number_format($valor / 1_000_000_000, 1, ',', '.').' mil M',
                 $valor >= 1_000_000 => '$ '.number_format($valor / 1_000_000, 0, ',', '.').' M',
                 default => '$ '.number_format($valor, 0, ',', '.'),
             };
