@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('propiedades', function (Blueprint $table) {
             $table->id();
-        
+
             $table->string('direccion');
             $table->enum('tipo', ['casa', 'apartamento', 'local comercial']);
             $table->string('tamano');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('precio');
 
             $table->enum('estado', ['disponible', 'vendida', 'arrendada']);
-        
+
             $table->timestamps();
         });
     }

@@ -170,7 +170,7 @@ class AsistenteInmobiliario
         $clientes = Cliente::selectRaw('tipo, count(*) as total')->groupBy('tipo')->pluck('total', 'tipo')
             ->map(fn ($total, $tipo) => "{$tipo}: {$total}")->implode(', ');
 
-        return "<cartera fecha_actual=\"".now()->toDateString()."\">\n"
+        return '<cartera fecha_actual="'.now()->toDateString()."\">\n"
             ."<propiedades formato=\"id | dirección | ciudad | tipo | área | habitaciones | baños | precio | estado\">\n{$lineasPropiedades}\n</propiedades>\n"
             ."<transacciones formato=\"fecha | tipo | propiedad | ciudad | cliente | monto\">\n{$lineasTransacciones}\n</transacciones>\n"
             ."<clientes>{$clientes}</clientes>\n"
@@ -223,7 +223,7 @@ class AsistenteInmobiliario
         $disponibles = Propiedad::disponibles()->count();
         $ventas = Transaccion::whereIn('tipo_transaccion', ['venta', 'compra'])->whereDate('fecha_transaccion', '>=', now()->subYear());
 
-        return "El asistente de IA no está configurado, así que no puedo interpretar tu pregunta. "
+        return 'El asistente de IA no está configurado, así que no puedo interpretar tu pregunta. '
             ."Agrega `ANTHROPIC_API_KEY` en el archivo `.env` para activarlo.\n\n"
             ."Mientras tanto, este es un resumen de tu cartera:\n\n"
             .'- **Propiedades:** '.Propiedad::count()." ({$disponibles} disponibles)\n"
