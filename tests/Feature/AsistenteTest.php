@@ -116,7 +116,7 @@ class AsistenteTest extends TestCase
     public function test_responde_preguntas_con_el_contexto_de_la_cartera(): void
     {
         $proveedor = $this->proveedorFalso();
-        $proveedor->respuestaTexto = "Tienes **1** propiedad en Cali.";
+        $proveedor->respuestaTexto = 'Tienes **1** propiedad en Cali.';
         Propiedad::factory()->create(['direccion' => 'Calle 5 # 38-25, San Fernando', 'ciudad' => 'Cali']);
 
         $this->actingAs($this->user)->postJson(route('asistente.preguntar'), [
