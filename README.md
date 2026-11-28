@@ -10,7 +10,7 @@ Gestiona inventario, clientes y negocios en un solo lugar, mide tu operación en
 y deja que la IA redacte anuncios, estime precios y responda preguntas sobre tu cartera.
 
 [![CI](https://github.com/zemogc/SAPI-Z/actions/workflows/ci.yml/badge.svg)](https://github.com/zemogc/SAPI-Z/actions/workflows/ci.yml)
-![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?logo=laravel&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?logo=php&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-3-8BC0D0?logo=alpinedotjs&logoColor=white)
@@ -154,7 +154,7 @@ resources/
 └── js/                     Alpine.js, gráficas con Chart.js y cliente del asistente
 ```
 
-**Stack:** Laravel 11 · Blade · Tailwind CSS · Alpine.js · Chart.js · SQLite/MySQL · SDK de Anthropic · PHPUnit.
+**Stack:** Laravel 12 · Blade · Tailwind CSS · Alpine.js · Chart.js · SQLite/MySQL · SDK de Anthropic · PHPUnit.
 
 ## Licencia
 

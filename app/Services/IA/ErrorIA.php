@@ -7,6 +7,4 @@ use RuntimeException;
 /**
  * Falla del proveedor de IA con un mensaje apto para mostrar al usuario.
  */
-class ErrorIA extends RuntimeException
-{
-}
+class ErrorIA extends RuntimeException {}

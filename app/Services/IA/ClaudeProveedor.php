@@ -26,8 +26,7 @@ class ClaudeProveedor implements ProveedorIA
         private string $modelo = 'claude-opus-5-5',
         private string $esfuerzo = 'low',
         private ?Client $cliente = null,
-    ) {
-    }
+    ) {}
 
     public function disponible(): bool
     {

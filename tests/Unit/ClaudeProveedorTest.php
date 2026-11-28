@@ -96,9 +96,7 @@ class TransporteFalso implements ClientInterface
 {
     public ?RequestInterface $peticion = null;
 
-    public function __construct(private ResponseInterface $respuesta)
-    {
-    }
+    public function __construct(private ResponseInterface $respuesta) {}
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {

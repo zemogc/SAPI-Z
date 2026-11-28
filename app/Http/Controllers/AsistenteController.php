@@ -13,9 +13,7 @@ use Illuminate\Validation\Rule;
 
 class AsistenteController extends Controller
 {
-    public function __construct(private AsistenteInmobiliario $asistente)
-    {
-    }
+    public function __construct(private AsistenteInmobiliario $asistente) {}
 
     public function index()
     {
