@@ -172,9 +172,7 @@ class ProveedorFalso implements ProveedorIA
 
     public array $ultimoEsquema = [];
 
-    public function __construct(private bool $disponible = true, private ?\Throwable $falla = null)
-    {
-    }
+    public function __construct(private bool $disponible = true, private ?\Throwable $falla = null) {}
 
     public function disponible(): bool
     {

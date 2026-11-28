@@ -18,9 +18,7 @@ class AsistenteInmobiliario
         .'Escribes en español neutro de Colombia, con tono profesional y cercano. '
         .'Los precios están en pesos colombianos (COP) y se escriben con puntos de miles, por ejemplo $ 350.000.000.';
 
-    public function __construct(private ProveedorIA $proveedor)
-    {
-    }
+    public function __construct(private ProveedorIA $proveedor) {}
 
     public function usaIA(): bool
     {
